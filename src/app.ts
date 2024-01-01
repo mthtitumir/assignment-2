@@ -13,7 +13,7 @@ app.use('/api', router)
 
 app.get('/', (req: Request, res: Response)=>{
     res.send({
-        message: "Assignment server is running"
+        message: "Assignment server is running!"
     })
 })
 
