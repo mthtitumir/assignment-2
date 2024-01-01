@@ -1,21 +1,22 @@
-import cors from 'cors';
-import express, { Application, Request, Response } from 'express';
-import { StudentRoutes } from './app/modules/student/student.route';
+import express, {Application, Request, Response} from 'express';
+import cors from 'cors'
+import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
 const app: Application = express();
 
-//parsers
 app.use(express.json());
-app.use(cors());
 
-// application routes
-app.use('/api/v1/students', StudentRoutes);
+app.use(cors())
 
-const getAController = (req: Request, res: Response) => {
-  const a = 10;
-  res.send(a);
-};
+app.use('/api', router)
 
-app.get('/', getAController);
+app.get('/', (req: Request, res: Response)=>{
+    res.send({
+        message: "Assignment server is running"
+    })
+})
+
+app.use(globalErrorHandler);
 
 export default app;
