@@ -23,11 +23,11 @@ const getAllUsersFromDB = async () => {
 
 const getSingleUserFromDB = async (id: number) => {
   await User.isUserExists(id);
-  const result = await User.findOne({ userId: id });
+  const result = await User.findOne({ userId: id }).select({password: 0, orders: 0});
   return result;
 };
 
-const updateUserFromDB = async (id: number, updatedUserData: TUser) => {
+const updateUserFromDB = async (id: number, updatedUserData: Partial<TUser>) => {
   const user = await User.isUserExists(id);
   if (!user){
     throw new Error("User not found!")

@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserServices } from './user.service';
 import sendResponse from '../../../utils/response';
+import { orderSchema, userValidationSchema } from './user.validation';
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userData = req.body;    
-    const result = await UserServices.createUserInDB(userData);
+    const userData = req.body;   
+    const zodValidationData = userValidationSchema.parse(userData); 
+    const result = await UserServices.createUserInDB(zodValidationData);
     sendResponse(res, {
       statusCode: 200,
       success: true,
@@ -22,7 +24,7 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: 'All users are retrieved successfully',
+      message: 'Users fetched successfully!',
       data: result,
     });
   } catch (err) {
@@ -41,7 +43,7 @@ const getSingleUser = async (
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: 'User fetched successfully',
+      message: 'User fetched successfully!',
       data: result,
     });
   } catch (err) {
@@ -52,6 +54,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId } = req.params;
     const user = req.body;
+    // const userValidation = updateUserValidationSchema.parse(user);
     const result = await UserServices.updateUserFromDB(Number(userId), user);
 
     sendResponse(res, {
@@ -86,8 +89,9 @@ const addUserOrder = async (
 ) => {
   try {
     const { userId } = req.params;
-    const { order } = req.body;
-    await UserServices.addUserOrderIntoDB(Number(userId), order);
+    const order = req.body;
+    const orderValidationData= orderSchema.parse(order);
+    await UserServices.addUserOrderIntoDB(Number(userId), orderValidationData);
 
     sendResponse(res, {
       statusCode: 200,

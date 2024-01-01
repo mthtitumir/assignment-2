@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 import { TAddress, TFullName, TOrder, TUser, UserModel } from "./user.interface";
 import bcrypt from 'bcrypt';
 
-
 const fullNameSchema = new Schema<TFullName>({
     firstName: {
         type: String,
