@@ -67,7 +67,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId } = req.params;
-    const result = await UserServices.deleteUserFromDB(Number(userId));
+    await UserServices.deleteUserFromDB(Number(userId));
 
     sendResponse(res, {
       statusCode: 200,
@@ -87,7 +87,7 @@ const addUserOrder = async (
   try {
     const { userId } = req.params;
     const { order } = req.body;
-    const result = await UserServices.addUserOrderIntoDB(Number(userId), order);
+    await UserServices.addUserOrderIntoDB(Number(userId), order);
 
     sendResponse(res, {
       statusCode: 200,
