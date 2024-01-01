@@ -2,14 +2,16 @@ import express from 'express';
 import { UserControllers } from './user.controller';
 const router = express.Router();
 
-// POST / //create a new user
-// GET /
+// POST / ---> create a new user
+// GET / ---> get all user
 // GET /:userId
 // PUT /:userId
 // DELETE /:userId
 // PUT /:userId/orders
 // GET /:userId/orders
 // GET /:userId/orders/total-price
+
+
 router.post('/', UserControllers.createUser);
 router.get('/', UserControllers.getAllUsers);
 router.get('/:userId', UserControllers.getSingleUser)
