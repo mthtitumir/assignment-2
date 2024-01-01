@@ -2,9 +2,7 @@ import { TOrder, TUser } from './user.interface';
 import { User } from './user.model';
 import bcrypt from 'bcrypt';
 
-const createUserInDB = async (userData: TUser) => {
-  console.log(userData);
-  
+const createUserInDB = async (userData: TUser) => {  
   const newUser = await User.create(userData);
   return newUser;
 };
@@ -39,10 +37,10 @@ const updateUserFromDB = async (id: number, updatedUserData: TUser) => {
       updatedUserData.password,
       Number(20),
     );
-    const result = await User.updateOne({ userId: id }, updatedUserData);
+    await User.updateOne({ userId: id }, updatedUserData);
     return user;
   }
-  const result = await User.updateOne({ userId: id }, updatedUserData);
+  await User.updateOne({ userId: id }, updatedUserData);
   return user;
 };
 
@@ -96,6 +94,7 @@ const getUserTotalPriceFromDB = async (id: number) => {
 
   return totalOrdersPrice;
 };
+
 
 export const UserServices = {
   createUserInDB,
